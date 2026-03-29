@@ -23,9 +23,17 @@ struct MacScrobblerApp: App {
                 
                 Divider()
                 
-                Text("Estado: \(scrobbleManager.statusMessage)")
-                    .font(.caption)
-                    .foregroundColor(scrobbleManager.statusMessage.contains("Éxito") ? .green : .primary)
+                // Nuevo bloque de estado con ícono y color dinámico
+                HStack {
+                    Image(systemName: scrobbleManager.statusIcon)
+                        .foregroundColor(scrobbleManager.statusColor)
+                    
+                    Text(scrobbleManager.statusText)
+                        .font(.caption)
+                        .foregroundColor(.primary)
+                }
+                .padding(.top, 3)
+                .padding(.bottom, 2)
                 
                 Divider()
                 
@@ -42,13 +50,12 @@ struct MacScrobblerApp: App {
                 Button("Salir") {
                     NSApplication.shared.terminate(nil)
                 }
+                .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .padding()
         } label: {
             Image(systemName: "music.note.list")
-            // Opcional: mostrar la canción directamente en la barra
-            // Text(scrobbleManager.currentTrack.isEmpty ? "Scrobbler" : scrobbleManager.currentTrack)
         }
-        .menuBarExtraStyle(.window) // Convierte el menú en un popover personalizado
+        .menuBarExtraStyle(.window)
     }
 }
